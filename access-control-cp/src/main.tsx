@@ -1,14 +1,18 @@
-// src/main.tsx
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
-import { AuthProvider } from './context/AuthContext.tsx'; // Importe o Provider
+
+// Importa o Provedor de Autenticação (Item 9)
+import { AuthProvider } from './context/AuthContext'; 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <AuthProvider> {/* ENVOLVE O APP */}
+    
+    {/* CORREÇÃO: Envolve a aplicação com o AuthProvider */}
+    <AuthProvider>
       <App />
     </AuthProvider>
+    
   </React.StrictMode>,
 );
