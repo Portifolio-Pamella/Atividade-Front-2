@@ -3,7 +3,7 @@
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}", // Essencial para o Tailwind ver o código
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {},
