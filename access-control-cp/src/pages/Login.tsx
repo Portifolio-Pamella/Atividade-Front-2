@@ -1,17 +1,18 @@
 // src/pages/Login.tsx
 
 import React from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import type { SubmitHandler } from 'react-hook-form'; // Importação de tipo separada
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext'; 
 
-// Define a tipagem dos dados do formulário
+// Tipagem dos dados do formulário (Item 4)
 interface LoginFormInputs {
   nomeUsuario: string;
   email: string;
 }
 
-const API_URL = 'http://localhost:3004/usuarios'; // Seu endpoint do json-server
+const API_URL = 'http://localhost:3004/usuarios';
 
 const Login: React.FC = () => {
   const { login } = useAuth();
@@ -25,8 +26,7 @@ const Login: React.FC = () => {
 
   const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
     try {
-      // Item 8: Valide o usuário consultando o endpoint usuarios
-      // Busca usuário com nomeUsuario E email correspondentes
+      // Item 8: Valida o usuário consultando o endpoint
       const response = await fetch(`${API_URL}?nomeUsuario=${data.nomeUsuario}&email=${data.email}`);
       const usuarios = await response.json();
 
@@ -36,18 +36,12 @@ const Login: React.FC = () => {
           type: 'manual',
           message: 'Usuário ou E-mail incorretos.',
         }, { shouldFocus: true });
-        
-        // Também pode ser útil setar um erro global se preferir
-        setError('nomeUsuario', {
-          type: 'manual',
-          message: 'Usuário ou E-mail incorretos.',
-        });
         return;
       }
       
       const user = usuarios[0];
       
-      // Item 8 & 9: Simula autenticação com localStorage e atualiza o contexto
+      // Item 8 & 9: Simula autenticação e salva no Context
       login({ id: user.id, nome: user.nome, email: user.email });
       
       // Redireciona para a home
@@ -60,24 +54,25 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-xl">
-        <h1 className="text-3xl font-extrabold text-gray-900 text-center mb-6">Login</h1>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    // ESTILO: Fundo rosa claro
+    <div className="flex items-center justify-center min-h-screen bg-pink-50">
+      <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-2xl border border-pink-100">
+        <h1 className="text-3xl font-extrabold text-gray-800 text-center mb-8">Acessar Conta</h1>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           
           {/* Campo nomeUsuario (Item 4) */}
           <div>
-            <label htmlFor="nomeUsuario" className="block text-sm font-medium text-gray-700">Nome de Usuário</label>
+            <label htmlFor="nomeUsuario" className="block text-sm font-medium text-gray-600">Nome de Usuário</label>
             <input
               id="nomeUsuario"
               type="text"
-              className={`mt-1 block w-full px-3 py-2 border ${errors.nomeUsuario ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+              // ESTILO: Borda rosa/foco rosa
+              className={`mt-1 block w-full px-4 py-2 border ${errors.nomeUsuario ? 'border-red-500' : 'border-pink-200'} rounded-lg shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm transition duration-150`}
               {...register('nomeUsuario', {
                 required: 'O nome de usuário é obrigatório.', // Item 6
               })}
               disabled={isSubmitting}
             />
-            {/* Item 6: Mensagem de erro personalizada */}
             {errors.nomeUsuario && (
               <p className="mt-1 text-xs text-red-600">{errors.nomeUsuario.message}</p>
             )}
@@ -85,40 +80,41 @@ const Login: React.FC = () => {
 
           {/* Campo email (Item 4) */}
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-600">Email</label>
             <input
               id="email"
               type="email"
-              className={`mt-1 block w-full px-3 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+              // ESTILO: Borda rosa/foco rosa
+              className={`mt-1 block w-full px-4 py-2 border ${errors.email ? 'border-red-500' : 'border-pink-200'} rounded-lg shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm transition duration-150`}
               {...register('email', {
                 required: 'O e-mail é obrigatório.', // Item 6
                 pattern: {
                   value: /^\S+@\S+?\.\S+$/i,
-                  message: 'Formato de e-mail inválido.', // Item 6
+                  message: 'Formato de e-mail inválido.',
                 },
               })}
               disabled={isSubmitting}
             />
-            {/* Item 6: Mensagem de erro personalizada */}
             {errors.email && (
               <p className="mt-1 text-xs text-red-600">{errors.email.message}</p>
             )}
           </div>
 
+          {/* Botão de Submit (Rosa) */}
           <button
             type="submit"
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 transition duration-150"
+            className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-md text-sm font-semibold text-white bg-pink-400 hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-300 disabled:opacity-50 transition duration-150"
             disabled={isSubmitting}
           >
             {isSubmitting ? 'Entrando...' : 'Entrar'}
           </button>
         </form>
 
-        {/* Item 3: Link para /cadastro */}
-        <div className="mt-6 text-center">
-          <p className="text-sm text-gray-600">
+        {/* Link para /cadastro (Item 3) */}
+        <div className="mt-8 text-center">
+          <p className="text-sm text-gray-500">
             Ainda não tem conta?{' '}
-            <Link to="/cadastro" className="font-medium text-indigo-600 hover:text-indigo-500">
+            <Link to="/cadastro" className="font-semibold text-pink-500 hover:text-pink-600 transition duration-150">
               Cadastre-se aqui
             </Link>
           </p>
