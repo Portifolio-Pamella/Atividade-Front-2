@@ -1,7 +1,3 @@
-Com certeza! Posso te ajudar com um README.md bem estruturado para o seu projeto de Controle de Acesso (CP5).
-
-Este README.md cobrirá os pontos essenciais do projeto e servirá como um guia para a configuração, execução e entendimento do código.
-
 🛡️ Access Control CP - Login e Cadastro
 Este projeto, desenvolvido como parte do CheckPoint 5 (CP5), implementa um sistema básico de Controle de Acesso (Login e Cadastro) utilizando React com TypeScript, React Hook Form para gerenciamento de formulários e json-server para simular um backend de usuários. A estilização é feita com Tailwind CSS.
 
