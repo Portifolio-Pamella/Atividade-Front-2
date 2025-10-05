@@ -2,6 +2,9 @@
 Controle de Acesso (CP5)
 Este projeto implementa um sistema de controle de acesso (Login e Cadastro) utilizando React com TypeScript, Context API para autenticação e React Hook Form para validação de formulários. A persistência dos dados é simulada com json-server.
 
+Pamella Christiny | 565206
+Felipe Ribeiro | 565224
+
 Tecnologias Utilizadas
 Categoria	Tecnologia	Finalidade
 Frontend	React com TypeScript (Vite)	Estrutura da aplicação moderna e tipada.
